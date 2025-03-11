@@ -6,12 +6,18 @@ class TreeNode:
         self.left = None
         self.right = None
 
+    def set_data(self, data):
+        self.data = data
+    
     def set_right(self, right):
         self.right = right
     
     def set_left(self, left):
         self.left = left
 
+    def get_data(self):
+        return self.data
+    
     def get_right(self):
         return self.right
     
@@ -29,38 +35,64 @@ class TreeNode:
                     count += 1
                 elif i == ')':
                     count -= 1
-                elif i.isdigit() == False and count == 0:
+                elif i.isdigit() == False and count == 0 and j > 0:
+                    left = TreeNode()
+                    right = TreeNode()
                     self.data = i
                     if ''.join(data_list[1:j]).isdigit():
-                        self.left = data_list[1:j].join()
+                        left.set_data(int(''.join(data_list[1:j])))
+                        self.left = left
                     else:
-                        self.insert(' '.join(data_list[1:j]))
+                        left.insert(' '.join(data_list[1:j]))
+                        self.left = left
                     if ''.join(data_list[j + 1:-1]).isdigit():
-                        self.left = data_list[j + 1:-1].join()
+                        right.set_data(int(''.join(data_list[j + 1:-1])))
+                        self.right = right
                     else:
-                        self.insert(' '.join(data_list[j + 1:-1]))
+                        right.insert(' '.join(data_list[j + 1:-1]))
+                        self.right = right
+                        
+    def post_order_calc(self):
+        if self.left == None and self.right == None:
+            return
+        
+        self.left.post_order_calc()
+
+        self.right.post_order_calc()
+        
+        match self.data:
+            case '+':
+                self.data = self.left.data + self.right.data
+            case '-':
+                self.data = self.left.data - self.right.data
+            case '*':
+                self.data = self.left.data * self.right.data
+            case '/':
+                self.data = self.left.data // self.right.data
+    
+    
+    
+    
                     
                 
             
 
 def main():
     data = argv[1]
-    root = TreeNode()
-    root.insert(data)
-    print('Insert Completed')
-    """for j, e in enumerate(data):
-        if e == ')':
-            end_index = j
-            for i in range(end_index, -1, -1):
-                if data[i] == '(' and i not in indexes:
-                    start_index = i
-                    indexes.append(i)
-                    break
-            result.append(data[start_index + 1: end_index])
-    print(result)
-"""
+    count = 0
+    for i in data:
+        if i == '(':
+            count += 1
+        elif i == ')':
+            count -= 1
+    if count == 0:
+        root = TreeNode()
+        root.insert(data)
+        root.post_order_calc()
+        print(root.data)
+    else:
+        print('Invalid expression: Opening and closing parenthases are not equal.')
     
-
 if __name__ == '__main__':
     main()
 
