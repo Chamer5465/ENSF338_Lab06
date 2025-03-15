@@ -81,7 +81,6 @@ def main():
     for e in theVector[1:]:
         insert(e, root)
     quicksort(theVector, 0, 9999)
-    print(timeit.timeit(lambda: binarySearch(theVector, 0, 9999, 33)))
     for i in theList:
         totalTimeBST = 0
         totalTimeBS = 0
