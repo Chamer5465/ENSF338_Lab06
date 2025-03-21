@@ -80,5 +80,5 @@ if __name__ == "__main__":
     main()
 
 #The bst built froom the shuffled vector is significantly faster for searches.
-#The bst built from the sorted vector is slower for searches due to no dividing of the tree when searching. 
+#The bst built from the sorted vector is slower for searches due to the lack of dividing the whole tree in half during each iteration when searching. 
 #This is due to the fact that the sorted vector produces a less balanced tree leading to a less efficient search time.
